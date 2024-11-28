@@ -1,0 +1,66 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PANEL",
+    "meta": {
+        "version": "PLCN_v1",
+        "update_url": null
+    },
+    "exported_at": "2024-11-28T07:55:49+00:00",
+    "name": "FlameCord",
+    "author": "theolbg@theolbg.ovh",
+    "uuid": "21b943de-6452-4625-b347-4eae50e8eb20",
+    "description": null,
+    "features": [
+        "java_version",
+        "pid_limit"
+    ],
+    "docker_images": {
+        "Java 21": "ghcr.io\/parkervcp\/yolks:java_21",
+        "Java 17": "ghcr.io\/parkervcp\/yolks:java_17",
+        "Java 16": "ghcr.io\/parkervcp\/yolks:java_16",
+        "Java 11": "ghcr.io\/parkervcp\/yolks:java_11",
+        "Java 8": "ghcr.io\/parkervcp\/yolks:java_8"
+    },
+    "file_denylist": [],
+    "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}}",
+    "config": {
+        "files": "{\n    \"config.yml\": {\n        \"parser\": \"yaml\",\n        \"find\": {\n            \"listeners[0].query_port\": \"{{server.allocations.default.port}}\",\n            \"listeners[0].host\": \"0.0.0.0:{{server.allocations.default.port}}\",\n            \"servers.*.address\": {\n                \"regex:^(127\\\\.0\\\\.0\\\\.1|localhost)(:\\\\d{1,5})?$\": \"{{config.docker.interface}}$2\"\n            }\n        }\n    }\n}",
+        "startup": "{\n    \"done\": \"Listening on \"\n}",
+        "logs": "{}",
+        "stop": "end"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/ash\r\n# FlameCord Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n\r\ncd \/mnt\/server\r\n\r\n",
+            "container": "ghcr.io\/parkervcp\/installers:alpine",
+            "entrypoint": "ash"
+        }
+    },
+    "variables": [
+        {
+            "name": "FlameCord Jar File",
+            "description": "The name of the Jarfile to use when running FlameCord.",
+            "env_variable": "SERVER_JARFILE",
+            "default_value": "FlameCord.jar",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "required",
+                "regex:\/^([\\w\\d._-]+)(\\.jar)$\/"
+            ],
+            "sort": 1
+        },
+        {
+            "name": "Gihub upload Jar File",
+            "description": "import from guithub.",
+            "env_variable": "GIHUB_UPLOAD",
+            "default_value": "https:\/\/raw.githubusercontent.com\/exempleuser\/exemple\/main\/exemple.jar",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": [
+                "url",
+                "nullable"
+            ],
+            "sort": 2
+        }
+    ]
+}
