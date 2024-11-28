@@ -4,7 +4,7 @@
         "version": "PLCN_v1",
         "update_url": "https:\/\/raw.githubusercontent.com\/Theo-pro94\/eggs-pelican\/refs\/heads\/main\/egg-flame-cord.json"
     },
-    "exported_at": "2024-11-28T07:57:39+00:00",
+    "exported_at": "2024-11-28T08:02:32+00:00",
     "name": "FlameCord",
     "author": "theolbg@theolbg.ovh",
     "uuid": "21b943de-6452-4625-b347-4eae50e8eb20",
@@ -30,7 +30,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/ash\r\n# FlameCord Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n\r\ncd \/mnt\/server\r\n\r\n",
+            "script": "#!\/bin\/ash\r\n# FlameCord Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n\r\ncd \/mnt\/server\r\n\r\n# V\u00e9rifie si la variable GITHUB_UPLOAD est d\u00e9finie et non vide\r\nif [ -n \"${GITHUB_UPLOAD}\" ]; then\r\n    # T\u00e9l\u00e9charge le fichier ZIP temporairement\r\n    TEMP_ZIP=\"\/mnt\/server\/temp_download.zip\"\r\n    \r\n    echo \"T\u00e9l\u00e9chargement du fichier ZIP depuis ${GITHUB_UPLOAD}...\"\r\n    if curl --fail -o \"${TEMP_ZIP}\" \"${GITHUB_UPLOAD}\"; then\r\n        echo \"Fichier ZIP t\u00e9l\u00e9charg\u00e9 avec succ\u00e8s : ${TEMP_ZIP}\"\r\n        \r\n        # Cr\u00e9e un dossier temporaire pour l'extraction\r\n        TEMP_DIR=\"\/mnt\/server\/temp_extract\"\r\n        mkdir -p \"${TEMP_DIR}\"\r\n        \r\n        echo \"Extraction du fichier ZIP...\"\r\n        unzip -q \"${TEMP_ZIP}\" -d \"${TEMP_DIR}\"\r\n        \r\n        # Recherche le fichier .jar dans le dossier extrait\r\n        JAR_FILE=$(find \"${TEMP_DIR}\" -type f -name \"*.jar\" | head -n 1)\r\n        \r\n        if [ -n \"${JAR_FILE}\" ]; then\r\n            echo \"Fichier JAR trouv\u00e9 : ${JAR_FILE}\"\r\n            \r\n            # D\u00e9place le fichier JAR sous le nom ${SERVER_JARFILE}\r\n            mv \"${JAR_FILE}\" \"\/mnt\/server\/${SERVER_JARFILE}\"\r\n            echo \"Fichier JAR d\u00e9plac\u00e9 vers \/mnt\/server\/${SERVER_JARFILE}\"\r\n        else\r\n            echo \"Aucun fichier .jar trouv\u00e9 dans l'archive.\"\r\n        fi\r\n        \r\n        # Nettoyage des fichiers temporaires\r\n        echo \"Nettoyage des fichiers temporaires...\"\r\n        rm -rf \"${TEMP_ZIP}\" \"${TEMP_DIR}\"\r\n    else\r\n        echo \"\u00c9chec du t\u00e9l\u00e9chargement. V\u00e9rifiez l'URL.\"\r\n    fi\r\nelse\r\n    echo \"La variable GITHUB_UPLOAD n'est pas d\u00e9finie ou est vide. Aucune action effectu\u00e9e.\"\r\nfi\r\n\r\n\r\n",
             "container": "ghcr.io\/parkervcp\/installers:alpine",
             "entrypoint": "ash"
         }
