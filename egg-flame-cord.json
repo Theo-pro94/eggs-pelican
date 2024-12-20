@@ -53,7 +53,7 @@
             "name": "Gihub upload Jar File",
             "description": "import from guithub.",
             "env_variable": "GIHUB_UPLOAD",
-            "default_value": "https:\/\/raw.githubusercontent.com\/exempleuser\/exemple\/main\/exemple.jar",
+            "default_value": "https:\/\/raw.githubusercontent.com\/Theo-pro94\/flamecord\/main\/FlameCord.jar",
             "user_viewable": true,
             "user_editable": true,
             "rules": [
